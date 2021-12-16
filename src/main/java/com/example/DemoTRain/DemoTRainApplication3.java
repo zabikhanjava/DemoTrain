@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.example.DemoTRain.service.DemoService;
-import com.example.DemoTRain.service.DemoServiceImpl;
 import com.example.DemoTRain.service.DemoServiceImpl2;
 
 import springfox.documentation.builders.RequestHandlerSelectors;

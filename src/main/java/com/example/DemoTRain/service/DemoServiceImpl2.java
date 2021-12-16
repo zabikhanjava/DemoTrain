@@ -2,6 +2,7 @@ package com.example.DemoTRain.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
@@ -60,7 +61,7 @@ public class DemoServiceImpl2 implements DemoService {
 		answers7.setQuestion(question);
 		question.setAnswers(list);
 		demodao.save(question);
-		ResponseEntity res = new ResponseEntity("stored-saved", HttpStatus.ACCEPTED);
+		ResponseEntity<String> res = new ResponseEntity<String>("stored-saved", HttpStatus.ACCEPTED);
 		return res;
 	}
 
@@ -68,11 +69,11 @@ public class DemoServiceImpl2 implements DemoService {
 	public ResponseEntity<List<Question>> getting(Long num) {
 		try {
 			List<Question> list = demodao.questioning();
-			ResponseEntity res = new ResponseEntity(list, HttpStatus.ACCEPTED);
+			ResponseEntity<List<Question>> res = new ResponseEntity(list, HttpStatus.ACCEPTED);
 			return res;
 		} catch (HibernateException e) {
 			log.info("{}:", e);
-			ResponseEntity res = new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+			ResponseEntity<List<Question>> res = new ResponseEntity(null, HttpStatus.BAD_REQUEST);
 			return res;
 
 		}
@@ -80,13 +81,17 @@ public class DemoServiceImpl2 implements DemoService {
 
 	@Override
 	public ResponseEntity<Question> gettingOne(Long num) {
-
+		Question listy=null;
 		try {
-			Question listy = demodao.findById(1l).get();
+			Optional<Question> list = demodao.findById(1l);
+			if(list.isPresent())
+				{
+				listy=list.get();
+				}
 			ResponseEntity res = new ResponseEntity(listy, HttpStatus.ACCEPTED);
 			return res;
 		} catch (HibernateException e) {
-			log.info("{}:", e);
+			log.info("this is: {0}", e);
 			ResponseEntity res = new ResponseEntity(null, HttpStatus.BAD_REQUEST);
 			return res;
 
